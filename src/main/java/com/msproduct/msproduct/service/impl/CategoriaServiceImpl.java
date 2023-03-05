@@ -1,11 +1,13 @@
 package com.msproduct.msproduct.service.impl;
 
+import com.msproduct.msproduct.exception.NotFoundException;
 import com.msproduct.msproduct.model.Categoria;
 import com.msproduct.msproduct.repository.CategoriaRepository;
 import com.msproduct.msproduct.service.CategoriaService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
@@ -37,8 +39,14 @@ public class CategoriaServiceImpl implements CategoriaService {
     }
 
     @Override
+    public Optional<Categoria> buscarPorId(Long id) {
+        return categoriaRepository.findById(id);
+    }
+
+    @Override
     public void eliminar(Long id) {
-        categoriaRepository.findById(id)
-                .ifPresent(categoria -> categoriaRepository.delete(categoria));
+        Categoria categoria = categoriaRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Para el producto : " + id));
+        categoriaRepository.delete(categoria);
     }
 }

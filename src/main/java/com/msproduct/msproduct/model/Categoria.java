@@ -17,6 +17,12 @@ public class Categoria {
     public Categoria() {
     }
 
+    public Categoria(String nombre, String descripcion, boolean estado) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.estado = estado;
+    }
+
     public Long getId() {
         return id;
     }
